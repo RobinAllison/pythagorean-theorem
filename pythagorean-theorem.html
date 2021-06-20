@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      h1{
+        margin-top: 80px;
+        font-size: 20px;
+        text-align: center
+      }
+      p{
+        text-align: center;
+        user-select: none
+      }
+      /*.a1{
+        cursor: col-resize
+      }*/
+    </style>
+  </head>
+  <body>
+    <h1> Pythagorean Theorem:</h1>
+    <p> If <span class='a1'>3</span>, <span class='b1'>4</span>, and <span class='c1'>5</span> are the lengths of the two legs and the hypotenuse respectively of a right triangle then <span class='a1'>3</span><sup>2</sup> + <span class='b1'>4</span><sup>2</sup> = <span class='c1'>5</span><sup>2</sup>.</p>
+  </body>
+  <script>
+
+
+    // Global Variables
+    var bMouseDown = false
+    var delta
+    var newPosition
+    var initialPosition
+    var selectedVar
+    var values = {
+      a: 0,
+      a1: 0,
+      b1: 0,
+      c1: 0
+    }
+    var className
+
+
+    // Functions
+    
+
+    function updateSpan(className){
+      spans = document.querySelectorAll(`.${className}`)
+      for (let i=0; i<spans.length; i++){
+        el = spans[i]
+        el.innerText = values[className]
+      }
+    }
+
+    function globalMouseDown(event){
+      bMouseDown = true
+      initialPosition = event.clientX
+      let element = event.target
+      className = element.getAttribute('class')
+
+
+    }
+
+    function globalMouseMove(event){
+      if (bMouseDown){
+        newPosition = event.clientX
+        delta = newPosition - initialPosition
+        values[className]= values[className] + delta
+        updateSpan(className)
+        initialPosition = newPosition
+      }
+    }
+    
+    function globalMouseUp(event){
+      bMouseDown = false
+      className = null 
+    }
+
+    document.addEventListener('mousedown', globalMouseDown)
+    document.addEventListener('mousemove', globalMouseMove)
+    document.addEventListener('mouseup', globalMouseUp)
+
+
+    document.addEventListener('click', function(event){
+      console.log(event.target.getAttribute('class'));
+    })
+  </script>
+</html>
+
